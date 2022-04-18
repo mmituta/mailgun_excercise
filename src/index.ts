@@ -14,12 +14,10 @@ import { ArchiveWebhookStep } from "./steps/archive-webhook-step";
 import { VerifyWebhookStep } from "./steps/verify-webhook-step";
 import { VerificationError } from "./verification/verification-error";
 import { NotificationError } from "./notification/notification-error";
+import { ArchiveError } from "./archive/archive-error";
 
-export const handler = async (
-  event: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> => {
-  const message = MailgunMessage.fromJSON(event.body);
-
+export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  const message: MailgunMessage = MailgunMessage.fromJSON(event.body);
 
   try {
     await WebhookProcessingPipeline.pipeline().
@@ -31,16 +29,10 @@ export const handler = async (
   catch (err) {
     console.error(err);
     if (err instanceof VerificationError) {
-      return {
-        statusCode: 400,
-        body: err.message
-      }
+      return newBadRequestResponse(err)
     }
-    if (err instanceof NotificationError) {
-      return {
-        statusCode: 400,
-        body: err.message
-      }
+    if (err instanceof NotificationError || err instanceof ArchiveError) {
+      return newServerErrorResponse(err)
     }
   }
   return {
@@ -49,4 +41,18 @@ export const handler = async (
   };
 
 
+}
+
+function newServerErrorResponse(err: NotificationError | ArchiveError): APIGatewayProxyResult | PromiseLike<APIGatewayProxyResult> {
+  return {
+    statusCode: 500,
+    body: err.message
+  };
+}
+
+function newBadRequestResponse(err: VerificationError): APIGatewayProxyResult | PromiseLike<APIGatewayProxyResult> {
+  return {
+    statusCode: 400,
+    body: err.message
+  };
 }
