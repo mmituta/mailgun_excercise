@@ -8,6 +8,8 @@ export class PublishNotificationStep implements PipelineStep{
     }
 
     public async process(mailgunMessage: MailgunMessage): Promise<void> {
-        await this.publisher.publish(new Notification('Mailgun', mailgunMessage.event.timestamp, mailgunMessage.event.event));
+        // TODO introduce different format for different types (e.g. failed + temporary/permanent)
+        const eventType = `email ${mailgunMessage.event.event}`;
+        await this.publisher.publish(new Notification('Mailgun', mailgunMessage.event.timestamp, eventType));
     }
 }
