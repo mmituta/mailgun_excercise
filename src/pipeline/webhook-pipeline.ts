@@ -1,4 +1,4 @@
-import { MailgunMessage } from "./mailgun-message";
+import { MailgunMessage } from "../mailgun-message";
 import { PipelineStep } from "./pipeline-step";
 
 export class WebhookProcessingPipeline {

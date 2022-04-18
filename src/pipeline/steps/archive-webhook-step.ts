@@ -1,6 +1,6 @@
-import { ArchiveEntry } from "../archive/archive-entry";
-import { WebHookArchive } from "../archive/webhook-archive";
-import { MailgunMessage } from "../mailgun-message";
+import { ArchiveEntry } from "../../archive/archive-entry";
+import { WebHookArchive } from "../../archive/webhook-archive";
+import { MailgunMessage } from "../../mailgun-message";
 import { PipelineStep } from "../pipeline-step";
 
 export class ArchiveWebhookStep implements PipelineStep{

@@ -7,8 +7,8 @@ import { ArchiveError } from "./archive-error";
 export class DynamoDbWebhookArchive implements WebHookArchive {
 
     private dynamoDbClient: DynamoDBDocumentClient;
-    constructor() {
-        this.dynamoDbClient = DynamoDBDocumentClient.from(new DynamoDBClient({ region: process.env.AWS_REGION }));
+    constructor(awsRegion: string) {
+        this.dynamoDbClient = DynamoDBDocumentClient.from(new DynamoDBClient({ region: awsRegion }));
     }
     async save(message: ArchiveEntry): Promise<void> {
         try {

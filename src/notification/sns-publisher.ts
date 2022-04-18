@@ -8,9 +8,9 @@ export class SNSPublisher implements NotificationPublisher{
     private snsClient: SNSClient;
     private arn: string; 
     
-    constructor(){
-        this.snsClient = new SNSClient({ region: process.env.AWS_REGION });
-        this.arn = `arn:aws:sns:${process.env.AWS_REGION}:${process.env.AWS_ACCOUNT_ID}:mail_events_topic`;
+    constructor(awsRegion: string, awsAccountId: string){
+        this.snsClient = new SNSClient({ region: awsRegion });
+        this.arn = `arn:aws:sns:${awsRegion}:${awsAccountId}:mail_events_topic`;
     }
 
     public async publish(notification: Notification){

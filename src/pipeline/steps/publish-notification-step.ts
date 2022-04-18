@@ -1,6 +1,6 @@
-import { Notification } from "../notification/notification";
-import { NotificationPublisher } from "../notification/notification-publisher";
-import { MailgunMessage } from "../mailgun-message";
+import { Notification } from "../../notification/notification";
+import { NotificationPublisher } from "../../notification/notification-publisher";
+import { MailgunMessage } from "../../mailgun-message";
 import { PipelineStep } from "../pipeline-step";
 
 export class PublishNotificationStep implements PipelineStep{

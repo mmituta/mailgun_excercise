@@ -1,7 +1,7 @@
-import { MailgunMessage } from "../mailgun-message";
+import { MailgunMessage } from "../../mailgun-message";
 import { PipelineStep } from "../pipeline-step";
-import { RequestVerifier } from "../verification/request-verifier";
-import { VerificationError } from "../verification/verification-error";
+import { RequestVerifier } from "../../verification/request-verifier";
+import { VerificationError } from "../../verification/verification-error";
 
 export class VerifyWebhookStep implements PipelineStep {
 
