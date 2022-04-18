@@ -9,6 +9,8 @@ import { DynamoDbWebhookArchive } from "./dynamo-webhook-archive";
 import { MailgunMessage } from "./mailgun/mailgun-message";
 import { MailgunRequestVerifier } from "./mailgun/mailgun-verifier";
 import { SNSPublisher } from "./sns-publisher";
+import { Notification } from "./event";
+import { NotificationPublisher } from "./publisher";
 
 export const handler = async (
   event: APIGatewayProxyEvent
@@ -25,8 +27,8 @@ export const handler = async (
   const archive: WebHookArchive = new DynamoDbWebhookArchive();
   await archive.save(message);
 
-  const publisher: SNSPublisher = new SNSPublisher();
-  await publisher.publish();
+  const publisher: NotificationPublisher = new SNSPublisher();
+  await publisher.publish(new Notification('test', 0, 'test'));
 
   return {
     statusCode: 200,
