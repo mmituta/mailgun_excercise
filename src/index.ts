@@ -25,7 +25,7 @@ export const handler = async (
     };
   }
 
-  MailgunProcessingPipeline.pipeline().
+ await MailgunProcessingPipeline.pipeline().
       withStep(new MailgunArchiveStep( new DynamoDbWebhookArchive())).
       withStep(new MailgunNotificationPublisher(new SNSPublisher())).
       process(message);

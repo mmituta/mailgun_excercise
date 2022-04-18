@@ -16,8 +16,10 @@ class PipelineBuilder {
         return this;
     }
 
-    process(message: MailgunMessage) {
-        this.steps.forEach(s=>s.process(message));
+    async process(message: MailgunMessage) {
+        for( const step of this.steps){
+            await step.process(message);
+        }
     }
 
 }
