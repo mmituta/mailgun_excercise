@@ -5,7 +5,15 @@ export class MailgunMessage {
 
     }
 
-    static parseJSON(json: string): MailgunMessage {
+    public toJson(): string {
+        const object:any = {};
+        object['signature'] = this.signature;
+        object['event-data'] = this.event;
+
+        return JSON.stringify(object);
+    }
+
+    static fromJSON(json: string): MailgunMessage {
         const parsedMessage = JSON.parse(json);
         const signature: MailgunSignature = parsedMessage['signature'];
         const event: DomainEvent = parsedMessage['event-data'];

@@ -11,7 +11,7 @@ describe('Tests for the MailgunMessage class', ()=>{
 
 
     it('Should parse signature from JSON', ()=>{
-        const message: MailgunMessage = MailgunMessage.parseJSON(sampleMessage);
+        const message: MailgunMessage = MailgunMessage.fromJSON(sampleMessage);
      
 
         expect(message.signature.token).toEqual(messageSignatureToken);
@@ -20,7 +20,7 @@ describe('Tests for the MailgunMessage class', ()=>{
     });
 
     it('Should parse event data from JSON', ()=>{
-        const message: MailgunMessage = MailgunMessage.parseJSON(sampleMessage);
+        const message: MailgunMessage = MailgunMessage.fromJSON(sampleMessage);
         expect(message.event.id).toEqual(messageId);
         expect(message.event.timestamp).toEqual(messageTimestamp);
     });
