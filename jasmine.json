@@ -1,3 +1,3 @@
 {
-    "spec_files": ["**/src/*[sS]pec.ts"]
+    "spec_files": ["src/**/*[sS]pec.ts"]
 }
