@@ -36,8 +36,8 @@ The terraform allso expects the following environmental variables to be present
 
 `export DEFAULT_REGION={default region}`
 
-## Lambda
-To deploy the lambda manually, without the use of terraform. The following configuration needs to be present (terraform creates it automatically):
+## Manual deploy
+To deploy the lambda manually, without the use of terraform, the following configuration needs to be present (terraform creates it automatically):
 ### Environmental variables:
 * `AWS_ACCOUNT_ID`
 * `MAILGUN_SIGN_KEY`
