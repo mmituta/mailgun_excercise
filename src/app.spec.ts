@@ -1,6 +1,3 @@
-//-------------------------------------------------
-// src/user-service-spec.ts
-//-------------------------------------------------
 
 describe("UserService getUsers method test case", ()=> {
 

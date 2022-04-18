@@ -6,7 +6,7 @@
     "scripts": {
         "build": "tsc",
         "lint": "eslint . --ext .ts",
-        "test": "jasmine --config=jasmine.json",
+        "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json",
         "package": "rm -f -r dist && npm run build && npm prune --production && npm run package-code && npm run package-dependencies && npm install",
         "package-code": "zip -q -r -j dist/lambda.zip dist/*",
         "package-dependencies": "zip -q -r dist/lambda.zip node_modules"
@@ -26,6 +26,7 @@
         "aws-sdk": "^2.815.0",
         "eslint": "^8.13.0",
         "jasmine": "^4.1.0",
-        "typescript": "^4.1.3"
+        "ts-node": "^10.7.0",
+        "typescript": "^4.6.3"
     }
 }
