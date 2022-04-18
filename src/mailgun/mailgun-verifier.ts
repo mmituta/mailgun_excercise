@@ -1,16 +1,17 @@
 import * as crypto from "crypto";
+import { MailgunSignature } from "./mailgun-message";
 
 
 export class MailgunRequestVerifier {
     constructor(private signingKey: string) {
 
     }
-    public verify(timestamp: string, token: string, signature: string): boolean {
+    public comesFromMailgun(messageSignature : MailgunSignature): boolean {
         const encodedToken = crypto
             .createHmac('sha256', this.signingKey)
-            .update(timestamp.concat(token))
+            .update(messageSignature.timestamp.concat(messageSignature.token))
             .digest('hex')
-        return (encodedToken === signature)
+        return (encodedToken === messageSignature.signature)
 
     }
 }
