@@ -1,8 +1,10 @@
 import * as crypto from "crypto";
-import { MailgunSignature } from "./mailgun-message";
+import { MailgunSignature } from "../mailgun-message";
+import { RequestVerifier } from "./request-verifier";
+import { VerificationError } from "./verification-error";
 
 
-export class MailgunRequestVerifier {
+export class MailgunTokenVerifier implements RequestVerifier{
     constructor(private signingKey: string) {
 
     }

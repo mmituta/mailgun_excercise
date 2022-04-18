@@ -1,6 +1,7 @@
 import { PublishCommand, SNSClient } from "@aws-sdk/client-sns";
-import { NotificationPublisher } from "./publisher";
-import { Notification } from "./event";
+import { NotificationPublisher } from "./notification-publisher";
+import { Notification } from "./notification";
+import { NotificationError } from "./notification-error";
 
 export class SNSPublisher implements NotificationPublisher{
 
@@ -15,9 +16,10 @@ export class SNSPublisher implements NotificationPublisher{
     public async publish(notification: Notification){
         try {
             const data = await this.snsClient.send(this.wrapInPublishCommand(notification));
-            console.log("Success.",  data);
+            console.log("Success - notification send",  data);
           } catch (err) {
-            console.log("Error", err.stack);
+            console.error("Error while sending notification: ", err.stack);
+            throw new NotificationError(err.message);
           }
     }
 

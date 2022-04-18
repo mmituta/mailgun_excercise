@@ -12,12 +12,15 @@ terraform {
 variable "aws_account_id" {
   type = string
   sensitive = true
-  default = "212858567084"
 }
+
 variable "aws_region" {
   type = string
-  default = "us-east-1"
 }
+variable "mailgun_sign_key"{
+    type = string
+}
+
 provider "aws" {
   profile = "default"
   region  = "${var.aws_region}"
@@ -60,7 +63,7 @@ resource "aws_lambda_function" "mail_lambda" {
   environment {
     variables = {
       AWS_ACCOUNT_ID = "${var.aws_account_id}"
-      MAILGUN_SIGN_KEY="39bb5c2af168e6100ea8a28c3445b14a-162d1f80-f492e3a6"
+      MAILGUN_SIGN_KEY="${var.mailgun_sign_key}"
 
     }
   }

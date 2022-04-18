@@ -1,7 +1,7 @@
-import { MailgunMessage } from "./mailgun/mailgun-message";
-import { MailgunPipelineStep } from "./mailgun/mailgun-pipeline-step";
+import { MailgunMessage } from "./mailgun-message";
+import { PipelineStep } from "./pipeline-step";
 
-export class MailgunProcessingPipeline {
+export class WebhookProcessingPipeline {
     public static pipeline(): PipelineBuilder {
         return new PipelineBuilder();
     }
@@ -9,9 +9,9 @@ export class MailgunProcessingPipeline {
 
 class PipelineBuilder {
 
-    private steps: MailgunPipelineStep[] = [];
+    private steps: PipelineStep[] = [];
 
-    withStep(step: MailgunPipelineStep): PipelineBuilder {
+    withStep(step: PipelineStep): PipelineBuilder {
         this.steps.push(step);
         return this;
     }

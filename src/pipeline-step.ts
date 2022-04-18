@@ -1,5 +1,5 @@
 import { MailgunMessage } from "./mailgun-message";
 
-export interface MailgunPipelineStep{
+export interface PipelineStep{
     process(message: MailgunMessage): void;
 }
