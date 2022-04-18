@@ -47,16 +47,12 @@ EOF
 }
 
 resource "aws_lambda_function" "mail_lambda" {
-  # If the file is not in the current working directory you will need to include a 
-  # path.module in the filename.
+
   filename      = "../dist/lambda.zip"
   function_name = "mail_events"
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "index.handler"
 
-  # The filebase64sha256() function is available in Terraform 0.11.12 and later
-  # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
-  # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
   source_code_hash = filebase64sha256("../dist/lambda.zip")
 
   runtime = "nodejs12.x"
@@ -64,6 +60,8 @@ resource "aws_lambda_function" "mail_lambda" {
   environment {
     variables = {
       AWS_ACCOUNT_ID = "${var.aws_account_id}"
+      MAILGUN_SIGN_KEY="39bb5c2af168e6100ea8a28c3445b14a-162d1f80-f492e3a6"
+
     }
   }
 
@@ -117,13 +115,7 @@ resource "aws_api_gateway_deployment" "v1" {
   rest_api_id = aws_api_gateway_rest_api.api.id
 
   triggers = {
-    # NOTE: The configuration below will satisfy ordering considerations,
-    #       but not pick up all future REST API changes. More advanced patterns
-    #       are possible, such as using the filesha1() function against the
-    #       Terraform configuration file(s) or removing the .id references to
-    #       calculate a hash against whole resources. Be aware that using whole
-    #       resources will show a difference after the initial implementation.
-    #       It will stabilize to only change when resources change afterwards.
+
     redeployment = sha1(jsonencode([
       aws_api_gateway_resource.resource.id,
       aws_api_gateway_method.method.id,

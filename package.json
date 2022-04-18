@@ -8,7 +8,7 @@
         "lint": "eslint . --ext .ts",
         "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json",
         "package": "rm -f -r dist && npm run build && npm prune --production && npm run package-code && npm run package-dependencies && npm install",
-        "package-code": "zip -q -r -j dist/lambda.zip dist/*",
+        "package-code": "cd dist && zip -q -r lambda.zip . && cd ../",
         "package-dependencies": "zip -q -r dist/lambda.zip node_modules"
     },
     "dependencies": {
