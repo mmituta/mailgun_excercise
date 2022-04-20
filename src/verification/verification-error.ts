@@ -1,7 +1,7 @@
 export class VerificationError extends Error {
 
-    constructor(message: string) {
-        super(message);
+    constructor() {
+        super("Request doesn't come from Mailgun");
     }
 
 }

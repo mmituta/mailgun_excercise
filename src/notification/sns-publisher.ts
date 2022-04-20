@@ -3,13 +3,14 @@ import { NotificationPublisher } from "./notification-publisher";
 import { Notification } from "./notification";
 import { NotificationError } from "./notification-error";
 
+/**
+ * Is responsible for publishing {@link Notification} instances to a SNS topic.
+ */
 export class SNSPublisher implements NotificationPublisher{
 
-    private snsClient: SNSClient;
     private arn: string; 
     
-    constructor(awsRegion: string, awsAccountId: string){
-        this.snsClient = new SNSClient({ region: awsRegion });
+    constructor(awsRegion: string, awsAccountId: string,  private snsClient: SNSClient = new SNSClient({ region: awsRegion })){
         this.arn = `arn:aws:sns:${awsRegion}:${awsAccountId}:mail_events_topic`;
     }
 

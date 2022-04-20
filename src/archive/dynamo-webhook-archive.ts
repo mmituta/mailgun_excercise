@@ -4,12 +4,15 @@ import { WebHookArchive } from "./webhook-archive";
 import { ArchiveEntry } from "./archive-entry";
 import { ArchiveError } from "./archive-error";
 
+/**
+ * Is responsible for archiving the webhooks into a DynamoDB table.
+ */
 export class DynamoDbWebhookArchive implements WebHookArchive {
 
-    private dynamoDbClient: DynamoDBDocumentClient;
-    constructor(awsRegion: string) {
-        this.dynamoDbClient = DynamoDBDocumentClient.from(new DynamoDBClient({ region: awsRegion }));
+
+    constructor(awsRegion: string, private dynamoDbClient = DynamoDBDocumentClient.from(new DynamoDBClient({ region: awsRegion }))) {
     }
+    
     async save(message: ArchiveEntry): Promise<void> {
         try {
             const data = await this.dynamoDbClient.send(this.wrapInPutCommand(message));

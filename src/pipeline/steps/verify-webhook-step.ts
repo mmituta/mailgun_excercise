@@ -3,6 +3,9 @@ import { PipelineStep } from "../pipeline-step";
 import { RequestVerifier } from "../../verification/request-verifier";
 import { VerificationError } from "../../verification/verification-error";
 
+/**
+ * This step is responsible for verifyning if the request came from Mailgun.
+ */
 export class VerifyWebhookStep implements PipelineStep {
 
     constructor(private verifier: RequestVerifier) {
@@ -12,7 +15,7 @@ export class VerifyWebhookStep implements PipelineStep {
     process(message: MailgunMessage): void {
         const valid = this.verifier.comesFromMailgun(message.signature);
         if (!valid) {
-            throw new VerificationError("Request doesn't come from Mailgun");
+            throw new VerificationError();
         }
     }
 

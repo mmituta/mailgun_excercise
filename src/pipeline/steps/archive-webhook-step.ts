@@ -3,6 +3,9 @@ import { WebHookArchive } from "../../archive/webhook-archive";
 import { MailgunMessage } from "../../mailgun-message";
 import { PipelineStep } from "../pipeline-step";
 
+/**
+ * This step is responsibl for archiving the received mailgun webhook.
+ */
 export class ArchiveWebhookStep implements PipelineStep{
     constructor(private archiver: WebHookArchive){
     }
