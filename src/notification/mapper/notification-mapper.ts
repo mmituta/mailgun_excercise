@@ -1,12 +1,12 @@
-import { DomainEvent } from "mailgun.js/interfaces/Events";
 import { MailgunMessage } from "../../mailgun-message";
-import { Notification } from "../../notification/notification";
+import { Notification } from "../notification";
+import { NotificationEventTypeMapper } from "./notification-event-type-mapper";
 
 /**
  * Is responsible for mapping between {@link MailgunMessage} and {@link Notification} class.
  */
 export class NotificationMapper {
-    constructor(private eventMapper: NotificationEventMapper = new NotificationEventMapper()){
+    constructor(private eventMapper: NotificationEventTypeMapper = new NotificationEventTypeMapper()){
     }
 
     public map(message: MailgunMessage): Notification {       
@@ -14,8 +14,3 @@ export class NotificationMapper {
     }
 }
 
-export class NotificationEventMapper{
-    public map(eventFromMessage: DomainEvent): string{
-        return`email ${eventFromMessage.event}`;
-    }
-}

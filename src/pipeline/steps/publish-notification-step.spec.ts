@@ -1,7 +1,7 @@
 import { PublishNotificationStep } from './publish-notification-step';
 import { NotificationPublisher } from '../../notification/notification-publisher';
 import { MailgunMessage } from '../../mailgun-message';
-import { NotificationMapper } from './notification-mapper';
+import { NotificationMapper } from '../../notification/mapper/notification-mapper';
 import { Notification } from '../../notification/notification';
 describe('Tests for the PublishNotificationStep class', () => {
 

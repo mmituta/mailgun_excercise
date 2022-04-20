@@ -1,5 +1,7 @@
 import { MailgunMessage } from "../../mailgun-message";
-import { NotificationEventMapper, NotificationMapper } from "./notification-mapper";
+import {  NotificationMapper } from "./notification-mapper";
+import {  NotificationEventTypeMapper } from "./notification-event-type-mapper";
+
 import { DomainEvent } from "mailgun.js/interfaces/Events"
 import { Notification } from '../../notification/notification';
 
@@ -27,7 +29,7 @@ describe('Tests for the notification mapper class', () => {
         const event: DomainEvent = <DomainEvent>{};
         event.event = 'event';
 
-        const typeMapper:jasmine.SpyObj<NotificationEventMapper> = jasmine.createSpyObj<NotificationEventMapper>('mapper', ['map']);
+        const typeMapper:jasmine.SpyObj<NotificationEventTypeMapper> = jasmine.createSpyObj<NotificationEventTypeMapper>('mapper', ['map']);
         typeMapper.map.and.returnValue('mapped type');
 
         const mapper: NotificationMapper = new NotificationMapper(typeMapper);
