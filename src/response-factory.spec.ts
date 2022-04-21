@@ -1,4 +1,5 @@
 import { ArchiveError } from './archive/archive-error';
+import { BadRequestError } from './errors/bad-request-error';
 import { NotificationError } from './notification/notification-error';
 import {ResponseFactory} from './response-factory';
 import { VerificationError } from './verification/verification-error';
@@ -19,8 +20,8 @@ describe('Tests for the ResponseFactoy class', ()=>{
         expect(response.body).toEqual(error.message);
     });
 
-    it('Should create bad request response for VerificationError', ()=>{
-        const error = new VerificationError();
+    it('Should create bad request response for BadRequestError', ()=>{
+        const error = new BadRequestError();
         const response = factory.createErrorResponse(error);
         expect(response.statusCode).toEqual(400);
         expect(response.body).toEqual(error.message);

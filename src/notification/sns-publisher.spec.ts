@@ -16,7 +16,7 @@ describe('Tests for the SNSPublisher class', () => {
     });
 
     it('Should send the notification', async() => {
-        const step: jasmine.SpyObj<any> = jasmine.createSpyObj('client', ['send']);
+        const step: jasmine.SpyObj<SNSClient> = jasmine.createSpyObj('client', ['send']);
 
         const publisher: SNSPublisher = new SNSPublisher('region', 'id', step);
         await publisher.publish(new Notification('p', 0, 'type'));

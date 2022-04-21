@@ -1,4 +1,4 @@
-import { MailgunMessage, MailgunSignature } from '../mailgun-message';
+import { MailgunMessage } from '../mailgun-message';
 import { PipelineStep } from './pipeline-step';
 import { WebhookProcessingPipeline } from './webhook-pipeline';
 
@@ -22,9 +22,9 @@ describe('Tests for the WebhookProcessingPipeline class', () => {
 
     it('Should not process any steps after step that threw an exception', async () => {
 
-        const firstStep: jasmine.SpyObj<PipelineStep> = createStepMock(() => { });
+        const firstStep: jasmine.SpyObj<PipelineStep> = createStepMock();
         const secondStep: jasmine.SpyObj<PipelineStep> = createStepMock(() => { throw new Error('Stop processing') });
-        const thirdStep: jasmine.SpyObj<PipelineStep> = createStepMock(() => { });
+        const thirdStep: jasmine.SpyObj<PipelineStep> = createStepMock();
 
         try {
             await WebhookProcessingPipeline.pipeline().
@@ -44,9 +44,11 @@ describe('Tests for the WebhookProcessingPipeline class', () => {
     });
 });
 
-function createStepMock(action: () => void): jasmine.SpyObj<PipelineStep> {
+function createStepMock(action?: () => void): jasmine.SpyObj<PipelineStep> {
     const step: jasmine.SpyObj<PipelineStep> = jasmine.createSpyObj<PipelineStep>('step', ['process']);
-    step.process.and.callFake(action);
+    if(action){
+        step.process.and.callFake(action);
+    }
 
     return step;
 }

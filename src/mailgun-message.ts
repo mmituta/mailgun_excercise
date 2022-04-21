@@ -1,4 +1,6 @@
 import { DomainEvent } from "mailgun.js/interfaces/Events"
+import { BadRequestError } from "./errors/bad-request-error";
+import { VerificationError } from "./verification/verification-error";
 
 export class MailgunMessage {
     constructor(public signature: MailgunSignature, public event: DomainEvent) {
@@ -6,7 +8,7 @@ export class MailgunMessage {
     }
 
     public toJson(): string {
-        const object:any = {};
+        const object: any = {};
         object['signature'] = this.signature;
         object['event-data'] = this.event;
 
@@ -14,11 +16,15 @@ export class MailgunMessage {
     }
 
     static fromJSON(json: string): MailgunMessage {
-        const parsedMessage = JSON.parse(json);
-        const signature: MailgunSignature = parsedMessage['signature'];
-        const event: DomainEvent = parsedMessage['event-data'];
+        try {
+            const parsedMessage = JSON.parse(json);
+            const signature: MailgunSignature = parsedMessage['signature'];
+            const event: DomainEvent = parsedMessage['event-data'];
 
-        return new MailgunMessage(signature, event);
+            return new MailgunMessage(signature, event);
+        } catch (err) {
+            throw new BadRequestError();
+        }
     }
 }
 

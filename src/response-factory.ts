@@ -1,6 +1,6 @@
 import { APIGatewayProxyResult } from "aws-lambda";
-import { ArchiveError } from "./archive/archive-error";
-import { NotificationError } from "./notification/notification-error";
+import { BadRequestError } from "./errors/bad-request-error";
+import { ServerError } from "./errors/server-error";
 import { VerificationError } from "./verification/verification-error";
 
 export class ResponseFactory {
@@ -9,16 +9,16 @@ export class ResponseFactory {
     }
 
     public createErrorResponse(err: Error): APIGatewayProxyResult {
-        if (err instanceof VerificationError) {
+        if (err instanceof BadRequestError) {
             return this.badRequestResponse(err)
         }
-        if (err instanceof NotificationError || err instanceof ArchiveError) {
+        if (err instanceof ServerError) {
             return this.serverErrorResponse(err)
         }
     }
 
 
-    private serverErrorResponse(err: NotificationError | ArchiveError): APIGatewayProxyResult {
+    private serverErrorResponse(err: ServerError): APIGatewayProxyResult {
         return this.newResponse(500, err.message);
     }
 

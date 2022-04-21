@@ -1,3 +1,4 @@
+import { BadRequestError } from "./errors/bad-request-error";
 import { MailgunMessage } from "./mailgun-message";
 
 describe('Tests for the MailgunMessage class', ()=>{
@@ -23,6 +24,11 @@ describe('Tests for the MailgunMessage class', ()=>{
         const message: MailgunMessage = MailgunMessage.fromJSON(sampleMessage);
         expect(message.event.id).toEqual(messageId);
         expect(message.event.timestamp).toEqual(messageTimestamp);
+    });
+
+    it('Should throw error when message is not of correct format', ()=>{
+
+        expect(()=>{MailgunMessage.fromJSON('bad format')}).toThrow(new BadRequestError());
     });
 
     const sampleMessage = `{

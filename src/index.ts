@@ -12,9 +12,9 @@ import { VerifyWebhookStep } from "./pipeline/steps/verify-webhook-step";
 import { ResponseFactory } from "./response-factory";
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const message: MailgunMessage = MailgunMessage.fromJSON(event.body);
   const responseFactory: ResponseFactory = new ResponseFactory();
   try {
+    const message: MailgunMessage = MailgunMessage.fromJSON(event.body);
     await WebhookProcessingPipeline.pipeline().
       withStep(new VerifyWebhookStep(new MailgunTokenVerifier(process.env.MAILGUN_SIGN_KEY))).
       withStep(new ArchiveWebhookStep(new DynamoDbWebhookArchive(process.env.AWS_REGION))).
