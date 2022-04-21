@@ -1,4 +1,4 @@
-import { SNSClient, PublishCommand } from "@aws-sdk/client-sns";
+import { SNSClient} from "@aws-sdk/client-sns";
 import { Notification } from "./notification";
 import { NotificationError } from "./notification-error";
 import {SNSPublisher} from './sns-publisher';
@@ -11,7 +11,7 @@ describe('Tests for the SNSPublisher class', () => {
 
         const publisher: SNSPublisher = new SNSPublisher('region', 'id', step);
         await expectAsync(publisher.publish(new Notification('p', 0, 'type')))
-        .toBeRejectedWith(new NotificationError("Sending failed")); // TODO make sure that it fails for different error types
+        .toBeRejectedWith(new NotificationError("Sending failed"));
      
     });
 
